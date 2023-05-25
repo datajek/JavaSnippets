@@ -1,0 +1,20 @@
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-weight: bold">class</span> <span style="color: #BB0066; font-weight: bold">BadSynchronization</span> <span style="color: #333333">{</span>
+
+    <span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">main</span><span style="color: #333333">(</span>String args<span style="color: #333333">[])</span> <span style="color: #008800; font-weight: bold">throws</span> InterruptedException <span style="color: #333333">{</span>
+        Object dummyObject <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> Object<span style="color: #333333">();</span>
+
+        <span style="color: #888888">// Attempting to call wait() on the object</span>
+        <span style="color: #888888">// outside of a synchronized block.</span>
+        dummyObject<span style="color: #333333">.</span><span style="color: #0000CC">wait</span><span style="color: #333333">();</span>
+    <span style="color: #333333">}</span>
+<span style="color: #333333">}</span>
+</pre></td></tr></table></div>
