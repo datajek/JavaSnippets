@@ -1,0 +1,8 @@
+void efficientWaitingFunction() {
+    mutex.acquire()
+    if (predicate == false) {
+      condVar.wait()
+    }
+    // Do something useful
+    mutex.release()     
+}
