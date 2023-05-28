@@ -1,0 +1,82 @@
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">class</span> <span style="color: #BB0066; font-weight: bold">SimulatedCAS</span> <span style="color: #333333">{</span>
+
+    <span style="color: #888888">// Let&#39;s assume for simplicity our value is a long</span>
+    <span style="color: #008800; font-weight: bold">private</span> <span style="color: #333399; font-weight: bold">long</span> value <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span>
+
+    <span style="color: #888888">// constructor to initialize the value</span>
+    <span style="color: #008800; font-weight: bold">public</span> <span style="color: #0066BB; font-weight: bold">SimulatedCAS</span><span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">long</span> initValue<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+        value <span style="color: #333333">=</span> initValue<span style="color: #333333">;</span>
+    <span style="color: #333333">}</span>
+
+    <span style="color: #008800; font-weight: bold">synchronized</span> <span style="color: #333399; font-weight: bold">long</span> <span style="color: #0066BB; font-weight: bold">getValue</span><span style="color: #333333">()</span> <span style="color: #333333">{</span>
+        <span style="color: #008800; font-weight: bold">return</span> value<span style="color: #333333">;</span>
+    <span style="color: #333333">}</span>
+
+    <span style="color: #888888">// The synchronized keyword causes all the steps in this method to execute</span>
+    <span style="color: #888888">// atomically, which is akin to simulating the compare and swap processor</span>
+    <span style="color: #888888">// instruction. The behavior of the function is as follows:</span>
+    <span style="color: #888888">//</span>
+    <span style="color: #888888">// 1. Return the expectedValue if the CAS instruction completes successfully, i.e.</span>
+    <span style="color: #888888">//    the newValue is written.</span>
+    <span style="color: #888888">// 2. Return the current value if the CAS instruction doesn&#39;t complete successfully</span>
+    <span style="color: #888888">//</span>
+    <span style="color: #888888">// The method is setup such that when expectedValue equals the return value</span>
+    <span style="color: #888888">// the caller can assume success.</span>
+    <span style="color: #008800; font-weight: bold">synchronized</span> <span style="color: #333399; font-weight: bold">long</span> <span style="color: #0066BB; font-weight: bold">compareAndSwap</span><span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">long</span> expectedValue<span style="color: #333333">,</span> <span style="color: #333399; font-weight: bold">long</span> newValue<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+
+        <span style="color: #008800; font-weight: bold">if</span> <span style="color: #333333">(</span>value <span style="color: #333333">==</span> expectedValue<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+            value <span style="color: #333333">=</span> newValue<span style="color: #333333">;</span>
+            <span style="color: #008800; font-weight: bold">return</span> expectedValue<span style="color: #333333">;</span>
+        <span style="color: #333333">}</span>
+
+        <span style="color: #888888">// return whatever is the current value</span>
+        <span style="color: #008800; font-weight: bold">return</span> value<span style="color: #333333">;</span>
+    <span style="color: #333333">}</span>
+
+    <span style="color: #888888">// This method uses the compareAndSwap() method to indicate if the CAS</span>
+    <span style="color: #888888">// instruction completed successfully or not.</span>
+    <span style="color: #008800; font-weight: bold">synchronized</span> <span style="color: #333399; font-weight: bold">boolean</span> <span style="color: #0066BB; font-weight: bold">compareAndSet</span><span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">long</span> expectedValue<span style="color: #333333">,</span> <span style="color: #333399; font-weight: bold">long</span> newValue<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+        <span style="color: #008800; font-weight: bold">return</span> <span style="color: #0066BB; font-weight: bold">compareAndSwap</span><span style="color: #333333">(</span>expectedValue<span style="color: #333333">,</span> newValue<span style="color: #333333">)</span> <span style="color: #333333">==</span> expectedValue<span style="color: #333333">;</span>
+    <span style="color: #333333">}</span>
+<span style="color: #333333">}</span>
+</pre></td></tr></table></div>
