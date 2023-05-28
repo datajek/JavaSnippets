@@ -1,0 +1,38 @@
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">class</span> <span style="color: #BB0066; font-weight: bold">NonblockingCounter</span> <span style="color: #333333">{</span>
+    <span style="color: #008800; font-weight: bold">private</span> SimulatedCAS count <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> SimulatedCAS<span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">);</span>
+
+    <span style="color: #008800; font-weight: bold">public</span> <span style="color: #333399; font-weight: bold">long</span> <span style="color: #0066BB; font-weight: bold">get</span><span style="color: #333333">()</span> <span style="color: #333333">{</span>
+        <span style="color: #008800; font-weight: bold">return</span> count<span style="color: #333333">.</span><span style="color: #0000CC">getValue</span><span style="color: #333333">();</span>
+    <span style="color: #333333">}</span>
+
+    <span style="color: #008800; font-weight: bold">public</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">increment</span><span style="color: #333333">()</span> <span style="color: #333333">{</span>
+
+        <span style="color: #333399; font-weight: bold">long</span> currentCount<span style="color: #333333">;</span>
+
+        <span style="color: #888888">// The loop exits when the return value from CAS is equal to our</span>
+        <span style="color: #888888">// expectedValue. Otherwise we keep looping until we are successful</span>
+        <span style="color: #008800; font-weight: bold">do</span> <span style="color: #333333">{</span>
+            currentCount <span style="color: #333333">=</span> count<span style="color: #333333">.</span><span style="color: #0000CC">getValue</span><span style="color: #333333">();</span>
+        <span style="color: #333333">}</span> <span style="color: #008800; font-weight: bold">while</span> <span style="color: #333333">(</span>currentCount <span style="color: #333333">!=</span> count<span style="color: #333333">.</span><span style="color: #0000CC">compareAndSwap</span><span style="color: #333333">(</span>currentCount<span style="color: #333333">,</span> currentCount <span style="color: #333333">+</span> <span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">));</span>
+
+    <span style="color: #333333">}</span>
+<span style="color: #333333">}</span>
+</pre></td></tr></table></div>
