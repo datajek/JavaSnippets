@@ -1,0 +1,32 @@
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-weight: bold">public</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">enqueue</span><span style="color: #333333">(</span>T item<span style="color: #333333">)</span> <span style="color: #008800; font-weight: bold">throws</span> InterruptedException <span style="color: #333333">{</span>
+
+        semProducer<span style="color: #333333">.</span><span style="color: #0000CC">acquire</span><span style="color: #333333">();</span>
+        semLock<span style="color: #333333">.</span><span style="color: #0000CC">acquire</span><span style="color: #333333">();</span>
+
+        <span style="color: #008800; font-weight: bold">if</span> <span style="color: #333333">(</span>tail <span style="color: #333333">==</span> capacity<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+            tail <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span>
+        <span style="color: #333333">}</span>
+
+        array<span style="color: #333333">[</span>tail<span style="color: #333333">]</span> <span style="color: #333333">=</span> item<span style="color: #333333">;</span>
+        size<span style="color: #333333">++;</span>
+        tail<span style="color: #333333">++;</span>
+
+        semLock<span style="color: #333333">.</span><span style="color: #0000CC">release</span><span style="color: #333333">();</span>
+        semConsumer<span style="color: #333333">.</span><span style="color: #0000CC">release</span><span style="color: #333333">();</span>
+    <span style="color: #333333">}</span>
+</pre></td></tr></table></div>
