@@ -1,0 +1,54 @@
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27</pre></td><td><pre style="margin: 0; line-height: 125%"> <span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">synchronized</span> T <span style="color: #0066BB; font-weight: bold">dequeue</span><span style="color: #333333">()</span> <span style="color: #008800; font-weight: bold">throws</span> InterruptedException <span style="color: #333333">{</span>
+
+        T item <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">null</span><span style="color: #333333">;</span>
+
+        <span style="color: #888888">// wait for atleast one item to be enqueued</span>
+        <span style="color: #008800; font-weight: bold">while</span> <span style="color: #333333">(</span>size <span style="color: #333333">==</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">)</span> <span style="color: #333333">{</span>
+            wait<span style="color: #333333">();</span>
+        <span style="color: #333333">}</span>
+
+        <span style="color: #888888">// reset head to start of array if its past the array</span>
+        <span style="color: #008800; font-weight: bold">if</span> <span style="color: #333333">(</span>head <span style="color: #333333">==</span> capacity<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+            head <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span>
+        <span style="color: #333333">}</span>
+        
+        <span style="color: #888888">// store the reference to the object being dequeued</span>
+        <span style="color: #888888">// and overwrite with null </span>
+        item <span style="color: #333333">=</span> array<span style="color: #333333">[</span>head<span style="color: #333333">];</span>
+        array<span style="color: #333333">[</span>head<span style="color: #333333">]</span> <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">null</span><span style="color: #333333">;</span>
+        head<span style="color: #333333">++;</span>
+        size<span style="color: #333333">--;</span>
+
+        <span style="color: #888888">// don&#39;t forget to call notify, there might be another thread</span>
+        <span style="color: #888888">// blocked in the enqueue method.</span>
+        notifyAll<span style="color: #333333">();</span>
+
+        <span style="color: #008800; font-weight: bold">return</span> item<span style="color: #333333">;</span>
+    <span style="color: #333333">}</span>
+</pre></td></tr></table></div>
