@@ -1,0 +1,22 @@
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-weight: bold">public</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">readerThread</span><span style="color: #333333">()</span> <span style="color: #333333">{</span>
+
+        a <span style="color: #333333">*=</span> <span style="color: #0000DD; font-weight: bold">10</span><span style="color: #333333">;</span>
+
+        <span style="color: #888888">// BLOCK#4</span>
+        <span style="color: #888888">// Moved out to readerThread() method from writerThread() method</span>
+        <span style="color: #008800; font-weight: bold">synchronized</span> <span style="color: #333333">(</span>lock2<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+            a <span style="color: #333333">*=</span> a<span style="color: #333333">;</span>
+            b <span style="color: #333333">*=</span> b<span style="color: #333333">;</span>
+        <span style="color: #333333">}</span>
+    <span style="color: #333333">}</span>
+</pre></td></tr></table></div>
