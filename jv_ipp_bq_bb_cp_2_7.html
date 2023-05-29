@@ -1,0 +1,110 @@
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">java.util.concurrent.locks.Lock</span><span style="color: #333333">;</span>
+<span style="color: #008800; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">java.util.concurrent.locks.ReentrantLock</span><span style="color: #333333">;</span>
+
+<span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">class</span> <span style="color: #BB0066; font-weight: bold">FaultyBlockingQueueWithMutex</span><span style="color: #333333">&lt;</span>T<span style="color: #333333">&gt;</span> <span style="color: #333333">{</span>
+    T<span style="color: #333333">[]</span> array<span style="color: #333333">;</span>
+    Lock lock <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> ReentrantLock<span style="color: #333333">();</span>
+    <span style="color: #333399; font-weight: bold">int</span> size <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span>
+    <span style="color: #333399; font-weight: bold">int</span> capacity<span style="color: #333333">;</span>
+    <span style="color: #333399; font-weight: bold">int</span> head <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span>
+    <span style="color: #333399; font-weight: bold">int</span> tail <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span>
+
+    <span style="color: #555555; font-weight: bold">@SuppressWarnings</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;unchecked&quot;</span><span style="color: #333333">)</span>
+    <span style="color: #008800; font-weight: bold">public</span> <span style="color: #0066BB; font-weight: bold">FaultyBlockingQueueWithMutex</span><span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">int</span> capacity<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+        <span style="color: #888888">// The casting results in a warning</span>
+        array <span style="color: #333333">=</span> <span style="color: #333333">(</span>T<span style="color: #333333">[])</span> <span style="color: #008800; font-weight: bold">new</span> Object<span style="color: #333333">[</span>capacity<span style="color: #333333">];</span>
+        <span style="color: #008800; font-weight: bold">this</span><span style="color: #333333">.</span><span style="color: #0000CC">capacity</span> <span style="color: #333333">=</span> capacity<span style="color: #333333">;</span>
+    <span style="color: #333333">}</span>
+
+    <span style="color: #008800; font-weight: bold">public</span> T <span style="color: #0066BB; font-weight: bold">dequeue</span><span style="color: #333333">()</span> <span style="color: #333333">{</span>
+
+        T item <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">null</span><span style="color: #333333">;</span>
+
+        <span style="color: #008800; font-weight: bold">while</span> <span style="color: #333333">(</span>size <span style="color: #333333">==</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">)</span> <span style="color: #333333">{</span>
+        <span style="color: #333333">}</span>
+
+        lock<span style="color: #333333">.</span><span style="color: #0000CC">lock</span><span style="color: #333333">();</span>
+        <span style="color: #008800; font-weight: bold">if</span> <span style="color: #333333">(</span>head <span style="color: #333333">==</span> capacity<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+            head <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span>
+        <span style="color: #333333">}</span>
+
+        item <span style="color: #333333">=</span> array<span style="color: #333333">[</span>head<span style="color: #333333">];</span>
+        array<span style="color: #333333">[</span>head<span style="color: #333333">]</span> <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">null</span><span style="color: #333333">;</span>
+        head<span style="color: #333333">++;</span>
+        size<span style="color: #333333">--;</span>
+
+        lock<span style="color: #333333">.</span><span style="color: #0000CC">unlock</span><span style="color: #333333">();</span>
+        <span style="color: #008800; font-weight: bold">return</span> item<span style="color: #333333">;</span>
+    <span style="color: #333333">}</span>
+
+    <span style="color: #008800; font-weight: bold">public</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">enqueue</span><span style="color: #333333">(</span>T item<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+
+        <span style="color: #008800; font-weight: bold">while</span> <span style="color: #333333">(</span>size <span style="color: #333333">==</span> capacity<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+        <span style="color: #333333">}</span>
+
+        lock<span style="color: #333333">.</span><span style="color: #0000CC">lock</span><span style="color: #333333">();</span>
+        <span style="color: #008800; font-weight: bold">if</span> <span style="color: #333333">(</span>tail <span style="color: #333333">==</span> capacity<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+            tail <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span>
+        <span style="color: #333333">}</span>
+
+        array<span style="color: #333333">[</span>tail<span style="color: #333333">]</span> <span style="color: #333333">=</span> item<span style="color: #333333">;</span>
+        size<span style="color: #333333">++;</span>
+        tail<span style="color: #333333">++;</span>
+        lock<span style="color: #333333">.</span><span style="color: #0000CC">unlock</span><span style="color: #333333">();</span>
+    <span style="color: #333333">}</span>
+<span style="color: #333333">}</span>
+</pre></td></tr></table></div>
