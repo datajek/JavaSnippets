@@ -8,15 +8,31 @@
  8
  9
 10
-11</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-weight: bold">public</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">readerThread</span><span style="color: #333333">()</span> <span style="color: #333333">{</span>
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">class</span> <span style="color: #BB0066; font-weight: bold">BlockingQueue</span><span style="color: #333333">&lt;</span>T<span style="color: #333333">&gt;</span> <span style="color: #333333">{</span>
 
-        a <span style="color: #333333">*=</span> <span style="color: #0000DD; font-weight: bold">10</span><span style="color: #333333">;</span>
+    T<span style="color: #333333">[]</span> array<span style="color: #333333">;</span>
+    <span style="color: #333399; font-weight: bold">int</span> size <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span>
+    <span style="color: #333399; font-weight: bold">int</span> capacity<span style="color: #333333">;</span>
+    <span style="color: #333399; font-weight: bold">int</span> head <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span>
+    <span style="color: #333399; font-weight: bold">int</span> tail <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span>
 
-        <span style="color: #888888">// BLOCK#4</span>
-        <span style="color: #888888">// Moved out to readerThread() method from writerThread() method</span>
-        <span style="color: #008800; font-weight: bold">synchronized</span> <span style="color: #333333">(</span>lock2<span style="color: #333333">)</span> <span style="color: #333333">{</span>
-            a <span style="color: #333333">*=</span> a<span style="color: #333333">;</span>
-            b <span style="color: #333333">*=</span> b<span style="color: #333333">;</span>
-        <span style="color: #333333">}</span>
+    <span style="color: #008800; font-weight: bold">public</span> <span style="color: #0066BB; font-weight: bold">BlockingQueue</span><span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">int</span> capacity<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+        array <span style="color: #333333">=</span> <span style="color: #333333">(</span>T<span style="color: #333333">[])</span> <span style="color: #008800; font-weight: bold">new</span> Object<span style="color: #333333">[</span>capacity<span style="color: #333333">];</span>
+        <span style="color: #008800; font-weight: bold">this</span><span style="color: #333333">.</span><span style="color: #0000CC">capacity</span> <span style="color: #333333">=</span> capacity<span style="color: #333333">;</span>
     <span style="color: #333333">}</span>
+
+    <span style="color: #008800; font-weight: bold">public</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">enqueue</span><span style="color: #333333">(</span>T item<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+    <span style="color: #333333">}</span>
+
+    <span style="color: #008800; font-weight: bold">public</span> T <span style="color: #0066BB; font-weight: bold">dequeue</span><span style="color: #333333">()</span> <span style="color: #333333">{</span>
+    <span style="color: #333333">}</span>
+<span style="color: #333333">}</span>
 </pre></td></tr></table></div>
