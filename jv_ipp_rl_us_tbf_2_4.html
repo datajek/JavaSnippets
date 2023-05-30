@@ -1,0 +1,68 @@
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">java.util.HashSet</span><span style="color: #333333">;</span>
+<span style="color: #008800; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">java.util.Set</span><span style="color: #333333">;</span>
+
+<span style="color: #008800; font-weight: bold">class</span> <span style="color: #BB0066; font-weight: bold">Demonstration</span> <span style="color: #333333">{</span>
+    <span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">main</span><span style="color: #333333">(</span> String args<span style="color: #333333">[]</span> <span style="color: #333333">)</span> <span style="color: #008800; font-weight: bold">throws</span> InterruptedException <span style="color: #333333">{</span>
+        Set<span style="color: #333333">&lt;</span>Thread<span style="color: #333333">&gt;</span> allThreads <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> HashSet<span style="color: #333333">&lt;</span>Thread<span style="color: #333333">&gt;();</span>
+        TokenBucketFilter tokenBucketFilter <span style="color: #333333">=</span> TokenBucketFilterFactory<span style="color: #333333">.</span><span style="color: #0000CC">makeTokenBucketFilter</span><span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">);</span>
+
+        <span style="color: #008800; font-weight: bold">for</span> <span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">int</span> i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span> i <span style="color: #333333">&lt;</span> <span style="color: #0000DD; font-weight: bold">10</span><span style="color: #333333">;</span> i<span style="color: #333333">++)</span> <span style="color: #333333">{</span>
+
+            Thread thread <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> Thread<span style="color: #333333">(</span><span style="color: #008800; font-weight: bold">new</span> Runnable<span style="color: #333333">()</span> <span style="color: #333333">{</span>
+
+                <span style="color: #008800; font-weight: bold">public</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">run</span><span style="color: #333333">()</span> <span style="color: #333333">{</span>
+                    <span style="color: #008800; font-weight: bold">try</span> <span style="color: #333333">{</span>
+                        tokenBucketFilter<span style="color: #333333">.</span><span style="color: #0000CC">getToken</span><span style="color: #333333">();</span>
+                    <span style="color: #333333">}</span> <span style="color: #008800; font-weight: bold">catch</span> <span style="color: #333333">(</span>InterruptedException ie<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+                        System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;We have a problem&quot;</span><span style="color: #333333">);</span>
+                    <span style="color: #333333">}</span>
+                <span style="color: #333333">}</span>
+            <span style="color: #333333">});</span>
+            thread<span style="color: #333333">.</span><span style="color: #0000CC">setName</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;Thread_&quot;</span> <span style="color: #333333">+</span> <span style="color: #333333">(</span>i <span style="color: #333333">+</span> <span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">));</span>
+            allThreads<span style="color: #333333">.</span><span style="color: #0000CC">add</span><span style="color: #333333">(</span>thread<span style="color: #333333">);</span>
+        <span style="color: #333333">}</span>
+
+        <span style="color: #008800; font-weight: bold">for</span> <span style="color: #333333">(</span>Thread t <span style="color: #333333">:</span> allThreads<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+            t<span style="color: #333333">.</span><span style="color: #0000CC">start</span><span style="color: #333333">();</span>
+        <span style="color: #333333">}</span>
+
+        <span style="color: #008800; font-weight: bold">for</span> <span style="color: #333333">(</span>Thread t <span style="color: #333333">:</span> allThreads<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+            t<span style="color: #333333">.</span><span style="color: #0000CC">join</span><span style="color: #333333">();</span>
+        <span style="color: #333333">}</span>
+
+    <span style="color: #333333">}</span>
+<span style="color: #333333">}</span>
+</pre></td></tr></table></div>
