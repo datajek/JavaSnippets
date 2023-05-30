@@ -1,106 +1,212 @@
-import java.util.*;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.ReentrantLock;
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%">  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">java.util.*</span><span style="color: #333333">;</span>
+<span style="color: #008800; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">java.util.concurrent.TimeUnit</span><span style="color: #333333">;</span>
+<span style="color: #008800; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">java.util.concurrent.locks.Condition</span><span style="color: #333333">;</span>
+<span style="color: #008800; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">java.util.concurrent.locks.ReentrantLock</span><span style="color: #333333">;</span>
 
-class Demonstration {
-    public static void main( String args[] ) throws InterruptedException {
-        DeferredCallbackExecutor.runTestTenCallbacks();
-    }
-}
+<span style="color: #008800; font-weight: bold">class</span> <span style="color: #BB0066; font-weight: bold">Demonstration</span> <span style="color: #333333">{</span>
+    <span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">main</span><span style="color: #333333">(</span> String args<span style="color: #333333">[]</span> <span style="color: #333333">)</span> <span style="color: #008800; font-weight: bold">throws</span> InterruptedException <span style="color: #333333">{</span>
+        DeferredCallbackExecutor<span style="color: #333333">.</span><span style="color: #0000CC">runTestTenCallbacks</span><span style="color: #333333">();</span>
+    <span style="color: #333333">}</span>
+<span style="color: #333333">}</span>
 
-class DeferredCallbackExecutor {
+<span style="color: #008800; font-weight: bold">class</span> <span style="color: #BB0066; font-weight: bold">DeferredCallbackExecutor</span> <span style="color: #333333">{</span>
 
-    PriorityQueue<CallBack> q = new PriorityQueue<CallBack>(new Comparator<CallBack>() {
-        public int compare(CallBack o1, CallBack o2) {
-            return (int) (o1.executeAt - o2.executeAt);
-        }
-    });
-    ReentrantLock lock = new ReentrantLock();
-    Condition newCallbackArrived = lock.newCondition();
+    PriorityQueue<span style="color: #333333">&lt;</span>CallBack<span style="color: #333333">&gt;</span> q <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> PriorityQueue<span style="color: #333333">&lt;</span>CallBack<span style="color: #333333">&gt;(</span><span style="color: #008800; font-weight: bold">new</span> Comparator<span style="color: #333333">&lt;</span>CallBack<span style="color: #333333">&gt;()</span> <span style="color: #333333">{</span>
+        <span style="color: #008800; font-weight: bold">public</span> <span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">compare</span><span style="color: #333333">(</span>CallBack o1<span style="color: #333333">,</span> CallBack o2<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+            <span style="color: #008800; font-weight: bold">return</span> <span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">int</span><span style="color: #333333">)</span> <span style="color: #333333">(</span>o1<span style="color: #333333">.</span><span style="color: #0000CC">executeAt</span> <span style="color: #333333">-</span> o2<span style="color: #333333">.</span><span style="color: #0000CC">executeAt</span><span style="color: #333333">);</span>
+        <span style="color: #333333">}</span>
+    <span style="color: #333333">});</span>
+    ReentrantLock lock <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> ReentrantLock<span style="color: #333333">();</span>
+    Condition newCallbackArrived <span style="color: #333333">=</span> lock<span style="color: #333333">.</span><span style="color: #0000CC">newCondition</span><span style="color: #333333">();</span>
 
-    private long findSleepDuration() {
-        long currentTime = System.currentTimeMillis();
-        return q.peek().executeAt - currentTime;
-    }
+    <span style="color: #008800; font-weight: bold">private</span> <span style="color: #333399; font-weight: bold">long</span> <span style="color: #0066BB; font-weight: bold">findSleepDuration</span><span style="color: #333333">()</span> <span style="color: #333333">{</span>
+        <span style="color: #333399; font-weight: bold">long</span> currentTime <span style="color: #333333">=</span> System<span style="color: #333333">.</span><span style="color: #0000CC">currentTimeMillis</span><span style="color: #333333">();</span>
+        <span style="color: #008800; font-weight: bold">return</span> q<span style="color: #333333">.</span><span style="color: #0000CC">peek</span><span style="color: #333333">().</span><span style="color: #0000CC">executeAt</span> <span style="color: #333333">-</span> currentTime<span style="color: #333333">;</span>
+    <span style="color: #333333">}</span>
 
-    public void start() throws InterruptedException {
-        long sleepFor = 0;
+    <span style="color: #008800; font-weight: bold">public</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">start</span><span style="color: #333333">()</span> <span style="color: #008800; font-weight: bold">throws</span> InterruptedException <span style="color: #333333">{</span>
+        <span style="color: #333399; font-weight: bold">long</span> sleepFor <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span>
 
-        while (true) {
+        <span style="color: #008800; font-weight: bold">while</span> <span style="color: #333333">(</span><span style="color: #008800; font-weight: bold">true</span><span style="color: #333333">)</span> <span style="color: #333333">{</span>
 
-            lock.lock();
+            lock<span style="color: #333333">.</span><span style="color: #0000CC">lock</span><span style="color: #333333">();</span>
 
-            while (q.size() == 0) {
-                newCallbackArrived.await();
-            }
+            <span style="color: #008800; font-weight: bold">while</span> <span style="color: #333333">(</span>q<span style="color: #333333">.</span><span style="color: #0000CC">size</span><span style="color: #333333">()</span> <span style="color: #333333">==</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">)</span> <span style="color: #333333">{</span>
+                newCallbackArrived<span style="color: #333333">.</span><span style="color: #0000CC">await</span><span style="color: #333333">();</span>
+            <span style="color: #333333">}</span>
 
-            while (q.size() != 0) {
-                sleepFor = findSleepDuration();
+            <span style="color: #008800; font-weight: bold">while</span> <span style="color: #333333">(</span>q<span style="color: #333333">.</span><span style="color: #0000CC">size</span><span style="color: #333333">()</span> <span style="color: #333333">!=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">)</span> <span style="color: #333333">{</span>
+                sleepFor <span style="color: #333333">=</span> findSleepDuration<span style="color: #333333">();</span>
 
-                if(sleepFor <=0)
-                    break;
+                <span style="color: #008800; font-weight: bold">if</span><span style="color: #333333">(</span>sleepFor <span style="color: #333333">&lt;=</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">)</span>
+                    <span style="color: #008800; font-weight: bold">break</span><span style="color: #333333">;</span>
 
-                newCallbackArrived.await(sleepFor, TimeUnit.MILLISECONDS);
-            }
+                newCallbackArrived<span style="color: #333333">.</span><span style="color: #0000CC">await</span><span style="color: #333333">(</span>sleepFor<span style="color: #333333">,</span> TimeUnit<span style="color: #333333">.</span><span style="color: #0000CC">MILLISECONDS</span><span style="color: #333333">);</span>
+            <span style="color: #333333">}</span>
 
-            CallBack cb = q.poll();
-            System.out.println(
-                    "Executed at " + System.currentTimeMillis()/1000 + " required at " + cb.executeAt/1000
-                            + ": message:" + cb.message);
+            CallBack cb <span style="color: #333333">=</span> q<span style="color: #333333">.</span><span style="color: #0000CC">poll</span><span style="color: #333333">();</span>
+            System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span>
+                    <span style="background-color: #fff0f0">&quot;Executed at &quot;</span> <span style="color: #333333">+</span> System<span style="color: #333333">.</span><span style="color: #0000CC">currentTimeMillis</span><span style="color: #333333">()/</span><span style="color: #0000DD; font-weight: bold">1000</span> <span style="color: #333333">+</span> <span style="background-color: #fff0f0">&quot; required at &quot;</span> <span style="color: #333333">+</span> cb<span style="color: #333333">.</span><span style="color: #0000CC">executeAt</span><span style="color: #333333">/</span><span style="color: #0000DD; font-weight: bold">1000</span>
+                            <span style="color: #333333">+</span> <span style="background-color: #fff0f0">&quot;: message:&quot;</span> <span style="color: #333333">+</span> cb<span style="color: #333333">.</span><span style="color: #0000CC">message</span><span style="color: #333333">);</span>
 
-            lock.unlock();
-        }
-    }
+            lock<span style="color: #333333">.</span><span style="color: #0000CC">unlock</span><span style="color: #333333">();</span>
+        <span style="color: #333333">}</span>
+    <span style="color: #333333">}</span>
 
-    public void registerCallback(CallBack callBack) {
-        lock.lock();
-        q.add(callBack);
-        newCallbackArrived.signal();
-        lock.unlock();
-    }
+    <span style="color: #008800; font-weight: bold">public</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">registerCallback</span><span style="color: #333333">(</span>CallBack callBack<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+        lock<span style="color: #333333">.</span><span style="color: #0000CC">lock</span><span style="color: #333333">();</span>
+        q<span style="color: #333333">.</span><span style="color: #0000CC">add</span><span style="color: #333333">(</span>callBack<span style="color: #333333">);</span>
+        newCallbackArrived<span style="color: #333333">.</span><span style="color: #0000CC">signal</span><span style="color: #333333">();</span>
+        lock<span style="color: #333333">.</span><span style="color: #0000CC">unlock</span><span style="color: #333333">();</span>
+    <span style="color: #333333">}</span>
 
-    static class CallBack {
-        long executeAt;
-        String message;
+    <span style="color: #008800; font-weight: bold">static</span> <span style="color: #008800; font-weight: bold">class</span> <span style="color: #BB0066; font-weight: bold">CallBack</span> <span style="color: #333333">{</span>
+        <span style="color: #333399; font-weight: bold">long</span> executeAt<span style="color: #333333">;</span>
+        String message<span style="color: #333333">;</span>
 
-        public CallBack(long executeAfter, String message) {
-            this.executeAt = System.currentTimeMillis() + (executeAfter * 1000);
-            this.message = message;
-        }
-    }
+        <span style="color: #008800; font-weight: bold">public</span> <span style="color: #0066BB; font-weight: bold">CallBack</span><span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">long</span> executeAfter<span style="color: #333333">,</span> String message<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+            <span style="color: #008800; font-weight: bold">this</span><span style="color: #333333">.</span><span style="color: #0000CC">executeAt</span> <span style="color: #333333">=</span> System<span style="color: #333333">.</span><span style="color: #0000CC">currentTimeMillis</span><span style="color: #333333">()</span> <span style="color: #333333">+</span> <span style="color: #333333">(</span>executeAfter <span style="color: #333333">*</span> <span style="color: #0000DD; font-weight: bold">1000</span><span style="color: #333333">);</span>
+            <span style="color: #008800; font-weight: bold">this</span><span style="color: #333333">.</span><span style="color: #0000CC">message</span> <span style="color: #333333">=</span> message<span style="color: #333333">;</span>
+        <span style="color: #333333">}</span>
+    <span style="color: #333333">}</span>
 
-    public static void runTestTenCallbacks() throws InterruptedException {
-        Set<Thread> allThreads = new HashSet<Thread>();
-        final DeferredCallbackExecutor deferredCallbackExecutor = new DeferredCallbackExecutor();
+    <span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">runTestTenCallbacks</span><span style="color: #333333">()</span> <span style="color: #008800; font-weight: bold">throws</span> InterruptedException <span style="color: #333333">{</span>
+        Set<span style="color: #333333">&lt;</span>Thread<span style="color: #333333">&gt;</span> allThreads <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> HashSet<span style="color: #333333">&lt;</span>Thread<span style="color: #333333">&gt;();</span>
+        <span style="color: #008800; font-weight: bold">final</span> DeferredCallbackExecutor deferredCallbackExecutor <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> DeferredCallbackExecutor<span style="color: #333333">();</span>
 
-        Thread service = new Thread(new Runnable() {
-            public void run() {
-                try {
-                    deferredCallbackExecutor.start();
-                } catch (InterruptedException ie) {
+        Thread service <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> Thread<span style="color: #333333">(</span><span style="color: #008800; font-weight: bold">new</span> Runnable<span style="color: #333333">()</span> <span style="color: #333333">{</span>
+            <span style="color: #008800; font-weight: bold">public</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">run</span><span style="color: #333333">()</span> <span style="color: #333333">{</span>
+                <span style="color: #008800; font-weight: bold">try</span> <span style="color: #333333">{</span>
+                    deferredCallbackExecutor<span style="color: #333333">.</span><span style="color: #0000CC">start</span><span style="color: #333333">();</span>
+                <span style="color: #333333">}</span> <span style="color: #008800; font-weight: bold">catch</span> <span style="color: #333333">(</span>InterruptedException ie<span style="color: #333333">)</span> <span style="color: #333333">{</span>
 
-                }
-            }
-        });
+                <span style="color: #333333">}</span>
+            <span style="color: #333333">}</span>
+        <span style="color: #333333">});</span>
 
-        service.start();
+        service<span style="color: #333333">.</span><span style="color: #0000CC">start</span><span style="color: #333333">();</span>
 
-        for (int i = 0; i < 10; i++) {
-            Thread thread = new Thread(new Runnable() {
-                public void run() {
-                    CallBack cb = new CallBack(1, "Hello this is " + Thread.currentThread().getName());
-                    deferredCallbackExecutor.registerCallback(cb);
-                }
-            });
-            thread.setName("Thread_" + (i + 1));
-            thread.start();
-            allThreads.add(thread);
-            Thread.sleep(1000);
-        }
+        <span style="color: #008800; font-weight: bold">for</span> <span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">int</span> i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span> i <span style="color: #333333">&lt;</span> <span style="color: #0000DD; font-weight: bold">10</span><span style="color: #333333">;</span> i<span style="color: #333333">++)</span> <span style="color: #333333">{</span>
+            Thread thread <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> Thread<span style="color: #333333">(</span><span style="color: #008800; font-weight: bold">new</span> Runnable<span style="color: #333333">()</span> <span style="color: #333333">{</span>
+                <span style="color: #008800; font-weight: bold">public</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">run</span><span style="color: #333333">()</span> <span style="color: #333333">{</span>
+                    CallBack cb <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> CallBack<span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">,</span> <span style="background-color: #fff0f0">&quot;Hello this is &quot;</span> <span style="color: #333333">+</span> Thread<span style="color: #333333">.</span><span style="color: #0000CC">currentThread</span><span style="color: #333333">().</span><span style="color: #0000CC">getName</span><span style="color: #333333">());</span>
+                    deferredCallbackExecutor<span style="color: #333333">.</span><span style="color: #0000CC">registerCallback</span><span style="color: #333333">(</span>cb<span style="color: #333333">);</span>
+                <span style="color: #333333">}</span>
+            <span style="color: #333333">});</span>
+            thread<span style="color: #333333">.</span><span style="color: #0000CC">setName</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;Thread_&quot;</span> <span style="color: #333333">+</span> <span style="color: #333333">(</span>i <span style="color: #333333">+</span> <span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">));</span>
+            thread<span style="color: #333333">.</span><span style="color: #0000CC">start</span><span style="color: #333333">();</span>
+            allThreads<span style="color: #333333">.</span><span style="color: #0000CC">add</span><span style="color: #333333">(</span>thread<span style="color: #333333">);</span>
+            Thread<span style="color: #333333">.</span><span style="color: #0000CC">sleep</span><span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">1000</span><span style="color: #333333">);</span>
+        <span style="color: #333333">}</span>
 
-        for (Thread t : allThreads) {
-            t.join();
-        }
-    }
-}
+        <span style="color: #008800; font-weight: bold">for</span> <span style="color: #333333">(</span>Thread t <span style="color: #333333">:</span> allThreads<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+            t<span style="color: #333333">.</span><span style="color: #0000CC">join</span><span style="color: #333333">();</span>
+        <span style="color: #333333">}</span>
+    <span style="color: #333333">}</span>
+<span style="color: #333333">}</span>
+</pre></td></tr></table></div>
