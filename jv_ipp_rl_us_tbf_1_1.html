@@ -1,0 +1,60 @@
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">class</span> <span style="color: #BB0066; font-weight: bold">TokenBucketFilter</span> <span style="color: #333333">{</span>
+
+    <span style="color: #008800; font-weight: bold">private</span> <span style="color: #333399; font-weight: bold">int</span> MAX_TOKENS<span style="color: #333333">;</span>
+    <span style="color: #008800; font-weight: bold">private</span> <span style="color: #333399; font-weight: bold">long</span> lastRequestTime <span style="color: #333333">=</span> System<span style="color: #333333">.</span><span style="color: #0000CC">currentTimeMillis</span><span style="color: #333333">();</span>
+    <span style="color: #333399; font-weight: bold">long</span> possibleTokens <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span>
+
+    <span style="color: #008800; font-weight: bold">public</span> <span style="color: #0066BB; font-weight: bold">TokenBucketFilter</span><span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">int</span> maxTokens<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+        MAX_TOKENS <span style="color: #333333">=</span> maxTokens<span style="color: #333333">;</span>
+    <span style="color: #333333">}</span>
+
+    <span style="color: #008800; font-weight: bold">synchronized</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">getToken</span><span style="color: #333333">()</span> <span style="color: #008800; font-weight: bold">throws</span> InterruptedException <span style="color: #333333">{</span>
+
+        <span style="color: #888888">// Divide by a 1000 to get granularity at the second level.</span>
+        possibleTokens <span style="color: #333333">+=</span> <span style="color: #333333">(</span>System<span style="color: #333333">.</span><span style="color: #0000CC">currentTimeMillis</span><span style="color: #333333">()</span> <span style="color: #333333">-</span> lastRequestTime<span style="color: #333333">)</span> <span style="color: #333333">/</span> <span style="color: #0000DD; font-weight: bold">1000</span><span style="color: #333333">;</span>
+
+        <span style="color: #008800; font-weight: bold">if</span> <span style="color: #333333">(</span>possibleTokens <span style="color: #333333">&gt;</span> MAX_TOKENS<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+            possibleTokens <span style="color: #333333">=</span> MAX_TOKENS<span style="color: #333333">;</span>
+        <span style="color: #333333">}</span>
+
+        <span style="color: #008800; font-weight: bold">if</span> <span style="color: #333333">(</span>possibleTokens <span style="color: #333333">==</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">)</span> <span style="color: #333333">{</span>
+            Thread<span style="color: #333333">.</span><span style="color: #0000CC">sleep</span><span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">1000</span><span style="color: #333333">);</span>
+        <span style="color: #333333">}</span> <span style="color: #008800; font-weight: bold">else</span> <span style="color: #333333">{</span>
+            possibleTokens<span style="color: #333333">--;</span>
+        <span style="color: #333333">}</span>
+        lastRequestTime <span style="color: #333333">=</span> System<span style="color: #333333">.</span><span style="color: #0000CC">currentTimeMillis</span><span style="color: #333333">();</span>
+
+        System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span>
+                <span style="background-color: #fff0f0">&quot;Granting &quot;</span> <span style="color: #333333">+</span> Thread<span style="color: #333333">.</span><span style="color: #0000CC">currentThread</span><span style="color: #333333">().</span><span style="color: #0000CC">getName</span><span style="color: #333333">()</span> <span style="color: #333333">+</span> <span style="background-color: #fff0f0">&quot; token at &quot;</span> <span style="color: #333333">+</span> <span style="color: #333333">(</span>System<span style="color: #333333">.</span><span style="color: #0000CC">currentTimeMillis</span><span style="color: #333333">()</span> <span style="color: #333333">/</span> <span style="color: #0000DD; font-weight: bold">1000</span><span style="color: #333333">));</span>
+    <span style="color: #333333">}</span>
+<span style="color: #333333">}</span>
+</pre></td></tr></table></div>
