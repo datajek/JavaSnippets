@@ -1,0 +1,10 @@
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%">1
+2
+3
+4
+5</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-weight: bold">do</span> <span style="color: #333333">{</span>
+    oldTop <span style="color: #333333">=</span> top<span style="color: #333333">.</span><span style="color: #0000CC">get</span><span style="color: #333333">();</span>
+    <span style="color: #008800; font-weight: bold">if</span> <span style="color: #333333">(</span>oldTop <span style="color: #333333">==</span> <span style="color: #008800; font-weight: bold">null</span><span style="color: #333333">)</span> <span style="color: #008800; font-weight: bold">return</span> <span style="color: #008800; font-weight: bold">null</span><span style="color: #333333">;</span>
+    newTop <span style="color: #333333">=</span> oldTop<span style="color: #333333">.</span><span style="color: #0000CC">getNext</span><span style="color: #333333">();</span>
+   <span style="color: #333333">}</span> <span style="color: #008800; font-weight: bold">while</span> <span style="color: #333333">(!</span>top<span style="color: #333333">.</span><span style="color: #0000CC">compareAndSet</span><span style="color: #333333">(</span>oldTop<span style="color: #333333">,</span> newTop<span style="color: #333333">));</span>
+</pre></td></tr></table></div>
