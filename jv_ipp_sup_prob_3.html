@@ -1,0 +1,68 @@
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">class</span> <span style="color: #BB0066; font-weight: bold">SupermanSlightlyBetter</span> <span style="color: #333333">{</span>
+
+    <span style="color: #008800; font-weight: bold">private</span> <span style="color: #008800; font-weight: bold">static</span> SupermanSlightlyBetter superman<span style="color: #333333">;</span>
+
+    <span style="color: #008800; font-weight: bold">private</span> <span style="color: #0066BB; font-weight: bold">SupermanSlightlyBetter</span><span style="color: #333333">()</span> <span style="color: #333333">{</span>
+
+    <span style="color: #333333">}</span>
+
+    <span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">static</span> SupermanSlightlyBetter <span style="color: #0066BB; font-weight: bold">getInstance</span><span style="color: #333333">()</span> <span style="color: #333333">{</span>
+
+        <span style="color: #888888">// Check if object is uninitialized</span>
+        <span style="color: #008800; font-weight: bold">if</span> <span style="color: #333333">(</span>superman <span style="color: #333333">==</span> <span style="color: #008800; font-weight: bold">null</span><span style="color: #333333">)</span> <span style="color: #333333">{</span>
+
+            <span style="color: #888888">// Now synchronize on the class object, so that only</span>
+            <span style="color: #888888">// 1 thread gets a chance to initialize the superman</span>
+            <span style="color: #888888">// object. Note that multiple threads can actually find</span>
+            <span style="color: #888888">// the superman object to be null and fall into the</span>
+            <span style="color: #888888">// first if clause</span>
+            <span style="color: #008800; font-weight: bold">synchronized</span> <span style="color: #333333">(</span>SupermanSlightlyBetter<span style="color: #333333">.</span><span style="color: #0000CC">class</span><span style="color: #333333">)</span> <span style="color: #333333">{</span>
+
+                <span style="color: #888888">// Must check once more if the superman object is still</span>
+                <span style="color: #888888">// null. It is possible that another thread might have</span>
+                <span style="color: #888888">// initialized it already as multiple threads could have</span>
+                <span style="color: #888888">// made past the first if check.</span>
+                <span style="color: #008800; font-weight: bold">if</span> <span style="color: #333333">(</span>superman <span style="color: #333333">==</span> <span style="color: #008800; font-weight: bold">null</span><span style="color: #333333">)</span> <span style="color: #333333">{</span>
+                    superman <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> SupermanSlightlyBetter<span style="color: #333333">();</span>
+                <span style="color: #333333">}</span>
+            <span style="color: #333333">}</span>
+
+        <span style="color: #333333">}</span>
+
+        <span style="color: #008800; font-weight: bold">return</span> superman<span style="color: #333333">;</span>
+    <span style="color: #333333">}</span>
+<span style="color: #333333">}</span>
+</pre></td></tr></table></div>
