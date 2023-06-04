@@ -1,0 +1,36 @@
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">customerWalksIn</span><span style="color: #333333">()</span> <span style="color: #008800; font-weight: bold">throws</span> InterruptedException <span style="color: #333333">{</span>
+
+        lock<span style="color: #333333">.</span><span style="color: #0000CC">lock</span><span style="color: #333333">();</span>
+        <span style="color: #008800; font-weight: bold">if</span> <span style="color: #333333">(</span>waitingCustomers <span style="color: #333333">==</span> CHAIRS<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+            System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;Customer walks out, all chairs occupied.&quot;</span><span style="color: #333333">);</span>
+            <span style="color: #888888">// Remember to unlock before leaving</span>
+            lock<span style="color: #333333">.</span><span style="color: #0000CC">unlock</span><span style="color: #333333">();</span>
+            <span style="color: #008800; font-weight: bold">return</span><span style="color: #333333">;</span>
+        <span style="color: #333333">}</span>
+        waitingCustomers<span style="color: #333333">++;</span>
+        lock<span style="color: #333333">.</span><span style="color: #0000CC">unlock</span><span style="color: #333333">();</span>
+
+        <span style="color: #888888">// Let the barber know you are here, in case he&#39;s asleep</span>
+        waitForCustomerToEnter<span style="color: #333333">.</span><span style="color: #0000CC">release</span><span style="color: #333333">();</span>
+        <span style="color: #888888">// Wait for the barber to come take you to the salon chair when its your turn</span>
+        waitForBarberToGetReady<span style="color: #333333">.</span><span style="color: #0000CC">acquire</span><span style="color: #333333">();</span>
+        <span style="color: #888888">// TODO: complete the rest of the logic.</span>
+<span style="color: #333333">}</span>
+</pre></td></tr></table></div>
