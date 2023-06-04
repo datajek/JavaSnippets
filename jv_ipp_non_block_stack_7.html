@@ -1,0 +1,18 @@
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%">1
+2
+3
+4
+5
+6
+7
+8
+9</pre></td><td><pre style="margin: 0; line-height: 125%">  <span style="color: #008800; font-weight: bold">do</span> <span style="color: #333333">{</span>
+                <span style="color: #888888">// retrieve the current value of top</span>
+                oldHead <span style="color: #333333">=</span> simulatedCAS<span style="color: #333333">.</span><span style="color: #0000CC">getValue</span><span style="color: #333333">();</span>
+                <span style="color: #888888">// create a new StackNode for the passed-in item.</span>
+                newHead <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> StackNode<span style="color: #333333">&lt;&gt;(</span>item<span style="color: #333333">);</span>
+                <span style="color: #888888">// Adjust the pointer</span>
+                newHead<span style="color: #333333">.</span><span style="color: #0000CC">setNext</span><span style="color: #333333">(</span>oldHead<span style="color: #333333">);</span>
+            <span style="color: #333333">}</span> <span style="color: #008800; font-weight: bold">while</span> <span style="color: #333333">(!</span>simulatedCAS<span style="color: #333333">.</span><span style="color: #0000CC">compareAndSet</span><span style="color: #333333">(</span>oldHead<span style="color: #333333">,</span> newHead<span style="color: #333333">));</span> 
+            <span style="color: #888888">// attempt to atomically check and update</span>
+</pre></td></tr></table></div>
