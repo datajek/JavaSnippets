@@ -1,0 +1,86 @@
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">java.util.concurrent.*</span><span style="color: #333333">;</span>
+
+<span style="color: #008800; font-weight: bold">class</span> <span style="color: #BB0066; font-weight: bold">Demonstration</span> <span style="color: #333333">{</span>
+
+    <span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">main</span><span style="color: #333333">(</span> String args<span style="color: #333333">[]</span> <span style="color: #333333">)</span> <span style="color: #008800; font-weight: bold">throws</span> Exception <span style="color: #333333">{</span>
+
+        CASBasedStack<span style="color: #333333">&lt;</span>Integer<span style="color: #333333">&gt;</span> stack <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> CASBasedStack<span style="color: #333333">&lt;&gt;();</span>
+        ExecutorService executorService <span style="color: #333333">=</span> Executors<span style="color: #333333">.</span><span style="color: #0000CC">newFixedThreadPool</span><span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">20</span><span style="color: #333333">);</span>
+        <span style="color: #333399; font-weight: bold">int</span> numThreads <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">2</span><span style="color: #333333">;</span>
+        CyclicBarrier barrier <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> CyclicBarrier<span style="color: #333333">(</span>numThreads<span style="color: #333333">);</span>
+        
+        Integer testValue <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> Integer<span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">51</span><span style="color: #333333">);</span>
+
+        <span style="color: #008800; font-weight: bold">try</span> <span style="color: #333333">{</span>
+            <span style="color: #008800; font-weight: bold">for</span> <span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">int</span> i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span> i <span style="color: #333333">&lt;</span> numThreads<span style="color: #333333">;</span> i<span style="color: #333333">++)</span> <span style="color: #333333">{</span>
+                executorService<span style="color: #333333">.</span><span style="color: #0000CC">submit</span><span style="color: #333333">(</span><span style="color: #008800; font-weight: bold">new</span> Runnable<span style="color: #333333">()</span> <span style="color: #333333">{</span>
+                    <span style="color: #555555; font-weight: bold">@Override</span>
+                    <span style="color: #008800; font-weight: bold">public</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">run</span><span style="color: #333333">()</span> <span style="color: #333333">{</span>
+                        <span style="color: #008800; font-weight: bold">for</span> <span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">int</span> i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span> i <span style="color: #333333">&lt;</span> <span style="color: #0000DD; font-weight: bold">10000</span><span style="color: #333333">;</span> i<span style="color: #333333">++)</span> <span style="color: #333333">{</span>
+                            stack<span style="color: #333333">.</span><span style="color: #0000CC">push</span><span style="color: #333333">(</span>testValue<span style="color: #333333">);</span>
+                        <span style="color: #333333">}</span>
+
+                        <span style="color: #008800; font-weight: bold">try</span> <span style="color: #333333">{</span>
+                            barrier<span style="color: #333333">.</span><span style="color: #0000CC">await</span><span style="color: #333333">();</span>
+                        <span style="color: #333333">}</span> <span style="color: #008800; font-weight: bold">catch</span> <span style="color: #333333">(</span>InterruptedException <span style="color: #333333">|</span> BrokenBarrierException ex<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+                            System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;ignoring exception&quot;</span><span style="color: #333333">);</span>
+                            <span style="color: #888888">//ignore both exceptions</span>
+                        <span style="color: #333333">}</span>
+
+                        <span style="color: #008800; font-weight: bold">for</span> <span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">int</span> i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span> i <span style="color: #333333">&lt;</span> <span style="color: #0000DD; font-weight: bold">10000</span><span style="color: #333333">;</span> i<span style="color: #333333">++)</span> <span style="color: #333333">{</span>
+                            stack<span style="color: #333333">.</span><span style="color: #0000CC">pop</span><span style="color: #333333">();</span>
+                        <span style="color: #333333">}</span>
+                    <span style="color: #333333">}</span>
+                <span style="color: #333333">});</span>
+            <span style="color: #333333">}</span>
+        <span style="color: #333333">}</span> <span style="color: #008800; font-weight: bold">finally</span> <span style="color: #333333">{</span>
+            executorService<span style="color: #333333">.</span><span style="color: #0000CC">shutdown</span><span style="color: #333333">();</span>
+            executorService<span style="color: #333333">.</span><span style="color: #0000CC">awaitTermination</span><span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">,</span> TimeUnit<span style="color: #333333">.</span><span style="color: #0000CC">HOURS</span><span style="color: #333333">);</span>
+        <span style="color: #333333">}</span>
+
+        System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;10,000 pushes and pops completed by 2 threads. Current top of stack &quot;</span> <span style="color: #333333">+</span> stack<span style="color: #333333">.</span><span style="color: #0000CC">pop</span><span style="color: #333333">());</span>
+    <span style="color: #333333">}</span>
+<span style="color: #333333">}</span>
+</pre></td></tr></table></div>
