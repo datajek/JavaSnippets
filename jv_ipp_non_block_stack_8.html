@@ -1,0 +1,18 @@
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%">1
+2
+3
+4
+5
+6
+7
+8
+9</pre></td><td><pre style="margin: 0; line-height: 125%">   <span style="color: #008800; font-weight: bold">do</span> <span style="color: #333333">{</span>
+                <span style="color: #888888">// get the current top of the stack</span>
+                returnValue <span style="color: #333333">=</span> simulatedCAS<span style="color: #333333">.</span><span style="color: #0000CC">getValue</span><span style="color: #333333">();</span>
+                <span style="color: #888888">// if the top is null then simply return null</span>
+                <span style="color: #008800; font-weight: bold">if</span> <span style="color: #333333">(</span>returnValue <span style="color: #333333">==</span> <span style="color: #008800; font-weight: bold">null</span><span style="color: #333333">)</span> <span style="color: #008800; font-weight: bold">return</span> <span style="color: #008800; font-weight: bold">null</span><span style="color: #333333">;</span>
+                <span style="color: #888888">// compute the new top of stack</span>
+                newHead <span style="color: #333333">=</span> returnValue<span style="color: #333333">.</span><span style="color: #0000CC">getNext</span><span style="color: #333333">();</span>
+            <span style="color: #333333">}</span> <span style="color: #008800; font-weight: bold">while</span> <span style="color: #333333">(!</span>simulatedCAS<span style="color: #333333">.</span><span style="color: #0000CC">compareAndSet</span><span style="color: #333333">(</span>returnValue<span style="color: #333333">,</span> newHead<span style="color: #333333">));</span>
+            <span style="color: #888888">// attempt to update the new top of stack</span>
+</pre></td></tr></table></div>
