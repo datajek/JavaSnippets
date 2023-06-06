@@ -1,0 +1,24 @@
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-weight: bold">public</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">HydrogenAtom</span><span style="color: #333333">()</span> <span style="color: #333333">{</span>
+   <span style="color: #008800; font-weight: bold">synchronized</span> <span style="color: #333333">(</span>sync<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+          
+      <span style="color: #888888">// if 2 hydrogen atoms already exist</span>
+      <span style="color: #008800; font-weight: bold">while</span> <span style="color: #333333">(</span>Collections<span style="color: #333333">.</span><span style="color: #0000CC">frequency</span><span style="color: #333333">(</span>Arrays<span style="color: #333333">.</span><span style="color: #0000CC">asList</span><span style="color: #333333">(</span>molecule<span style="color: #333333">),</span> <span style="background-color: #fff0f0">&quot;H&quot;</span><span style="color: #333333">)</span> <span style="color: #333333">==</span> <span style="color: #0000DD; font-weight: bold">2</span><span style="color: #333333">)</span> <span style="color: #333333">{</span> 
+          sync<span style="color: #333333">.</span><span style="color: #0000CC">wait</span><span style="color: #333333">();</span>
+      <span style="color: #333333">}</span>
+
+      molecule<span style="color: #333333">[</span>count<span style="color: #333333">]</span> <span style="color: #333333">=</span> <span style="background-color: #fff0f0">&quot;H&quot;</span><span style="color: #333333">;</span>
+      count<span style="color: #333333">++;</span>
+   <span style="color: #333333">}</span>
+<span style="color: #333333">}</span>
+</pre></td></tr></table></div>
