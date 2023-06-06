@@ -1,0 +1,42 @@
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre></td><td><pre style="margin: 0; line-height: 125%"> <span style="color: #008800; font-weight: bold">class</span> <span style="color: #BB0066; font-weight: bold">SumTask</span> <span style="color: #008800; font-weight: bold">implements</span> Callable<span style="color: #333333">&lt;</span>Integer<span style="color: #333333">&gt;</span> <span style="color: #333333">{</span>
+
+        <span style="color: #333399; font-weight: bold">int</span> n<span style="color: #333333">;</span>
+
+        <span style="color: #008800; font-weight: bold">public</span> <span style="color: #0066BB; font-weight: bold">SumTask</span><span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">int</span> n<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+            <span style="color: #008800; font-weight: bold">this</span><span style="color: #333333">.</span><span style="color: #0000CC">n</span> <span style="color: #333333">=</span> n<span style="color: #333333">;</span>
+        <span style="color: #333333">}</span>
+
+        <span style="color: #008800; font-weight: bold">public</span> Integer <span style="color: #0066BB; font-weight: bold">call</span><span style="color: #333333">()</span> <span style="color: #008800; font-weight: bold">throws</span> Exception <span style="color: #333333">{</span>
+
+            <span style="color: #008800; font-weight: bold">if</span> <span style="color: #333333">(</span>n <span style="color: #333333">&lt;=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">)</span>
+                <span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span>
+
+            <span style="color: #333399; font-weight: bold">int</span> sum <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span>
+            <span style="color: #008800; font-weight: bold">for</span> <span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">int</span> i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">;</span> i <span style="color: #333333">&lt;=</span> n<span style="color: #333333">;</span> i<span style="color: #333333">++)</span> <span style="color: #333333">{</span>
+                sum <span style="color: #333333">+=</span> i<span style="color: #333333">;</span>
+            <span style="color: #333333">}</span>
+            
+            <span style="color: #008800; font-weight: bold">return</span> sum<span style="color: #333333">;</span>
+        <span style="color: #333333">}</span>
+    <span style="color: #333333">}</span>
+</pre></td></tr></table></div>
