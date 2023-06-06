@@ -1,0 +1,204 @@
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%">  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">java.util.concurrent.*</span><span style="color: #333333">;</span>
+
+<span style="color: #008800; font-weight: bold">class</span> <span style="color: #BB0066; font-weight: bold">PrintNumberSeries</span> <span style="color: #333333">{</span>
+    <span style="color: #008800; font-weight: bold">private</span> <span style="color: #333399; font-weight: bold">int</span> n<span style="color: #333333">;</span>
+    <span style="color: #008800; font-weight: bold">private</span> Semaphore zeroSem<span style="color: #333333">,</span> oddSem<span style="color: #333333">,</span> evenSem<span style="color: #333333">;</span>
+    
+    <span style="color: #008800; font-weight: bold">public</span> <span style="color: #0066BB; font-weight: bold">PrintNumberSeries</span><span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">int</span> n<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+        <span style="color: #008800; font-weight: bold">this</span><span style="color: #333333">.</span><span style="color: #0000CC">n</span> <span style="color: #333333">=</span> n<span style="color: #333333">;</span>
+        zeroSem <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> Semaphore<span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">);</span>
+        oddSem <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> Semaphore<span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">);</span>
+        evenSem <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> Semaphore<span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">);</span>
+    <span style="color: #333333">}</span>
+
+    <span style="color: #008800; font-weight: bold">public</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">PrintZero</span><span style="color: #333333">()</span> <span style="color: #333333">{</span>
+        <span style="color: #008800; font-weight: bold">for</span> <span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">int</span> i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span> i <span style="color: #333333">&lt;</span> n<span style="color: #333333">;</span> <span style="color: #333333">++</span>i<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+            <span style="color: #008800; font-weight: bold">try</span> <span style="color: #333333">{</span>
+                zeroSem<span style="color: #333333">.</span><span style="color: #0000CC">acquire</span><span style="color: #333333">();</span>
+            <span style="color: #333333">}</span>
+            <span style="color: #008800; font-weight: bold">catch</span> <span style="color: #333333">(</span>Exception e<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+            <span style="color: #333333">}</span>
+            System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">print</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;0&quot;</span><span style="color: #333333">);</span>
+            <span style="color: #888888">// release oddSem if i is even or else release evenSem if i is odd</span>
+            <span style="color: #333333">(</span>i <span style="color: #333333">%</span> <span style="color: #0000DD; font-weight: bold">2</span> <span style="color: #333333">==</span> <span style="color: #0000DD; font-weight: bold">0</span> <span style="color: #333333">?</span> oddSem <span style="color: #333333">:</span> evenSem<span style="color: #333333">).</span><span style="color: #0000CC">release</span><span style="color: #333333">();</span> 
+        <span style="color: #333333">}</span>
+    <span style="color: #333333">}</span>
+
+    <span style="color: #008800; font-weight: bold">public</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">PrintEven</span><span style="color: #333333">()</span> <span style="color: #333333">{</span>
+        <span style="color: #008800; font-weight: bold">for</span> <span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">int</span> i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">2</span><span style="color: #333333">;</span> i <span style="color: #333333">&lt;=</span> n<span style="color: #333333">;</span> i <span style="color: #333333">+=</span> <span style="color: #0000DD; font-weight: bold">2</span><span style="color: #333333">)</span> <span style="color: #333333">{</span>
+            <span style="color: #008800; font-weight: bold">try</span> <span style="color: #333333">{</span>
+                evenSem<span style="color: #333333">.</span><span style="color: #0000CC">acquire</span><span style="color: #333333">();</span>
+            <span style="color: #333333">}</span>
+            <span style="color: #008800; font-weight: bold">catch</span> <span style="color: #333333">(</span>Exception e<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+            <span style="color: #333333">}</span>
+            System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">print</span><span style="color: #333333">(</span>i<span style="color: #333333">);</span>
+            zeroSem<span style="color: #333333">.</span><span style="color: #0000CC">release</span><span style="color: #333333">();</span>
+        <span style="color: #333333">}</span>
+    <span style="color: #333333">}</span>
+
+    <span style="color: #008800; font-weight: bold">public</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">PrintOdd</span><span style="color: #333333">()</span> <span style="color: #333333">{</span>
+        <span style="color: #008800; font-weight: bold">for</span> <span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">int</span> i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">;</span> i <span style="color: #333333">&lt;=</span> n<span style="color: #333333">;</span> i <span style="color: #333333">+=</span> <span style="color: #0000DD; font-weight: bold">2</span><span style="color: #333333">)</span> <span style="color: #333333">{</span>
+            <span style="color: #008800; font-weight: bold">try</span> <span style="color: #333333">{</span>
+                oddSem<span style="color: #333333">.</span><span style="color: #0000CC">acquire</span><span style="color: #333333">();</span>
+            <span style="color: #333333">}</span>
+            <span style="color: #008800; font-weight: bold">catch</span> <span style="color: #333333">(</span>Exception e<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+            <span style="color: #333333">}</span>
+            System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">print</span><span style="color: #333333">(</span>i<span style="color: #333333">);</span>
+            zeroSem<span style="color: #333333">.</span><span style="color: #0000CC">release</span><span style="color: #333333">();</span>
+        <span style="color: #333333">}</span>
+    <span style="color: #333333">}</span>
+<span style="color: #333333">}</span>
+
+<span style="color: #008800; font-weight: bold">class</span> <span style="color: #BB0066; font-weight: bold">PrintNumberSeriesThread</span> <span style="color: #008800; font-weight: bold">extends</span> Thread <span style="color: #333333">{</span>
+
+    PrintNumberSeries zeo<span style="color: #333333">;</span>
+    String method<span style="color: #333333">;</span>
+    
+    <span style="color: #008800; font-weight: bold">public</span> <span style="color: #0066BB; font-weight: bold">PrintNumberSeriesThread</span><span style="color: #333333">(</span>PrintNumberSeries zeo<span style="color: #333333">,</span> String method<span style="color: #333333">){</span>
+        <span style="color: #008800; font-weight: bold">this</span><span style="color: #333333">.</span><span style="color: #0000CC">zeo</span> <span style="color: #333333">=</span> zeo<span style="color: #333333">;</span>
+        <span style="color: #008800; font-weight: bold">this</span><span style="color: #333333">.</span><span style="color: #0000CC">method</span> <span style="color: #333333">=</span> method<span style="color: #333333">;</span>
+    <span style="color: #333333">}</span>
+    
+    <span style="color: #008800; font-weight: bold">public</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">run</span><span style="color: #333333">()</span> <span style="color: #333333">{</span>
+        <span style="color: #008800; font-weight: bold">if</span> <span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;zero&quot;</span><span style="color: #333333">.</span><span style="color: #0000CC">equals</span><span style="color: #333333">(</span>method<span style="color: #333333">))</span> <span style="color: #333333">{</span>
+            <span style="color: #008800; font-weight: bold">try</span> <span style="color: #333333">{</span>
+                zeo<span style="color: #333333">.</span><span style="color: #0000CC">PrintZero</span><span style="color: #333333">();</span>
+            <span style="color: #333333">}</span>
+            <span style="color: #008800; font-weight: bold">catch</span> <span style="color: #333333">(</span>Exception e<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+            <span style="color: #333333">}</span>
+        <span style="color: #333333">}</span>
+        <span style="color: #008800; font-weight: bold">else</span> <span style="color: #0066BB; font-weight: bold">if</span> <span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;even&quot;</span><span style="color: #333333">.</span><span style="color: #0000CC">equals</span><span style="color: #333333">(</span>method<span style="color: #333333">))</span> <span style="color: #333333">{</span>
+            <span style="color: #008800; font-weight: bold">try</span> <span style="color: #333333">{</span>
+                zeo<span style="color: #333333">.</span><span style="color: #0000CC">PrintEven</span><span style="color: #333333">();</span>
+            <span style="color: #333333">}</span>
+            <span style="color: #008800; font-weight: bold">catch</span> <span style="color: #333333">(</span>Exception e<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+            <span style="color: #333333">}</span>
+        <span style="color: #333333">}</span>
+        <span style="color: #008800; font-weight: bold">else</span> <span style="color: #0066BB; font-weight: bold">if</span> <span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;odd&quot;</span><span style="color: #333333">.</span><span style="color: #0000CC">equals</span><span style="color: #333333">(</span>method<span style="color: #333333">))</span> <span style="color: #333333">{</span>
+            <span style="color: #008800; font-weight: bold">try</span> <span style="color: #333333">{</span>
+                zeo<span style="color: #333333">.</span><span style="color: #0000CC">PrintOdd</span><span style="color: #333333">();</span>
+            <span style="color: #333333">}</span>
+            <span style="color: #008800; font-weight: bold">catch</span> <span style="color: #333333">(</span>Exception e<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+            <span style="color: #333333">}</span>
+        <span style="color: #333333">}</span>
+    <span style="color: #333333">}</span>
+<span style="color: #333333">}</span>
+
+<span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">class</span> <span style="color: #BB0066; font-weight: bold">Main</span> <span style="color: #333333">{</span>
+
+    <span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">main</span><span style="color: #333333">(</span>String<span style="color: #333333">[]</span> args<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+        
+	    PrintNumberSeries zeo <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> PrintNumberSeries<span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">5</span><span style="color: #333333">);</span>
+	        
+	    Thread t1 <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> PrintNumberSeriesThread<span style="color: #333333">(</span>zeo<span style="color: #333333">,</span><span style="background-color: #fff0f0">&quot;zero&quot;</span><span style="color: #333333">);</span>
+	    Thread t2 <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> PrintNumberSeriesThread<span style="color: #333333">(</span>zeo<span style="color: #333333">,</span><span style="background-color: #fff0f0">&quot;even&quot;</span><span style="color: #333333">);</span>
+	    Thread t3 <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> PrintNumberSeriesThread<span style="color: #333333">(</span>zeo<span style="color: #333333">,</span><span style="background-color: #fff0f0">&quot;odd&quot;</span><span style="color: #333333">);</span>
+	        
+	    t2<span style="color: #333333">.</span><span style="color: #0000CC">start</span><span style="color: #333333">();</span>
+	    t1<span style="color: #333333">.</span><span style="color: #0000CC">start</span><span style="color: #333333">();</span> 
+	    t3<span style="color: #333333">.</span><span style="color: #0000CC">start</span><span style="color: #333333">();</span>
+    
+    <span style="color: #333333">}</span>
+<span style="color: #333333">}</span>
+</pre></td></tr></table></div>
