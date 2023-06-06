@@ -1,0 +1,42 @@
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-weight: bold">class</span> <span style="color: #BB0066; font-weight: bold">Thread</span> <span style="color: #008800; font-weight: bold">implements</span> Runnable <span style="color: #333333">{</span>
+
+    <span style="color: #888888">// The following three initially uninitialized fields are exclusively</span>
+    <span style="color: #888888">// managed by class java.util.concurrent.ThreadLocalRandom. These</span>
+    <span style="color: #888888">// fields are used to build the high-performance PRNGs in the</span>
+    <span style="color: #888888">// concurrent code, and we can not risk accidental false sharing.</span>
+    <span style="color: #888888">// Hence, the fields are isolated with @Contended.</span>
+
+    <span style="color: #888888">/** The current seed for a ThreadLocalRandom */</span>
+    <span style="color: #555555; font-weight: bold">@jdk.internal.vm.annotation.Contended</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;tlr&quot;</span><span style="color: #333333">)</span>
+    <span style="color: #333399; font-weight: bold">long</span> threadLocalRandomSeed<span style="color: #333333">;</span>
+
+    <span style="color: #888888">/** Probe hash value; nonzero if threadLocalRandomSeed initialized */</span>
+    <span style="color: #555555; font-weight: bold">@jdk.internal.vm.annotation.Contended</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;tlr&quot;</span><span style="color: #333333">)</span>
+    <span style="color: #333399; font-weight: bold">int</span> threadLocalRandomProbe<span style="color: #333333">;</span>
+
+    <span style="color: #888888">/** Secondary seed isolated from public ThreadLocalRandom sequence */</span>
+    <span style="color: #555555; font-weight: bold">@jdk.internal.vm.annotation.Contended</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;tlr&quot;</span><span style="color: #333333">)</span>
+    <span style="color: #333399; font-weight: bold">int</span> threadLocalRandomSecondarySeed<span style="color: #333333">;</span>
+
+<span style="color: #333333">}</span>
+</pre></td></tr></table></div>
