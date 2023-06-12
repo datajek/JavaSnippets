@@ -1,0 +1,80 @@
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">java.util.concurrent.*</span><span style="color: #333333">;</span>
+
+<span style="color: #008800; font-weight: bold">class</span> <span style="color: #BB0066; font-weight: bold">Demonstration</span> <span style="color: #333333">{</span>
+    <span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">main</span><span style="color: #333333">(</span> String args<span style="color: #333333">[]</span> <span style="color: #333333">)</span> <span style="color: #008800; font-weight: bold">throws</span> Exception <span style="color: #333333">{</span>
+        <span style="color: #888888">// create an executor service</span>
+        ExecutorService executorService <span style="color: #333333">=</span> Executors<span style="color: #333333">.</span><span style="color: #0000CC">newFixedThreadPool</span><span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">15</span><span style="color: #333333">);</span>
+
+        <span style="color: #888888">// register four parties with phaser, when in fact we&#39;ll only have</span>
+        <span style="color: #888888">// threads synchronize at the barrier to cause them to block</span>
+        Phaser phaser <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> Phaser<span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">4</span><span style="color: #333333">);</span>
+        System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;Is phaser terminated &quot;</span> <span style="color: #333333">+</span> phaser<span style="color: #333333">.</span><span style="color: #0000CC">isTerminated</span><span style="color: #333333">());</span>
+
+
+        <span style="color: #008800; font-weight: bold">try</span> <span style="color: #333333">{</span>
+
+            <span style="color: #008800; font-weight: bold">for</span> <span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">int</span> i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span> i <span style="color: #333333">&lt;</span> <span style="color: #0000DD; font-weight: bold">3</span><span style="color: #333333">;</span> i<span style="color: #333333">++)</span> <span style="color: #333333">{</span>
+                executorService<span style="color: #333333">.</span><span style="color: #0000CC">submit</span><span style="color: #333333">(</span><span style="color: #008800; font-weight: bold">new</span> Runnable<span style="color: #333333">()</span> <span style="color: #333333">{</span>
+                    <span style="color: #555555; font-weight: bold">@Override</span>
+                    <span style="color: #008800; font-weight: bold">public</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">run</span><span style="color: #333333">()</span> <span style="color: #333333">{</span>
+
+                        phaser<span style="color: #333333">.</span><span style="color: #0000CC">arriveAndAwaitAdvance</span><span style="color: #333333">();</span>
+                        System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span>Thread<span style="color: #333333">.</span><span style="color: #0000CC">currentThread</span><span style="color: #333333">().</span><span style="color: #0000CC">getName</span><span style="color: #333333">()</span> <span style="color: #333333">+</span> <span style="background-color: #fff0f0">&quot; proceeding forward.&quot;</span><span style="color: #333333">);</span>
+                    <span style="color: #333333">}</span>
+                <span style="color: #333333">});</span>
+            <span style="color: #333333">}</span>
+
+            <span style="color: #888888">// wait for worker threads to reach the barrier. We use Thread.sleep only for demonstration</span>
+            <span style="color: #888888">// purposes and keep the examples simple. NEVER use Thread.sleep() to synchronize between threads!</span>
+            Thread<span style="color: #333333">.</span><span style="color: #0000CC">sleep</span><span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">3000</span><span style="color: #333333">);</span>
+            System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;Main thread force terminating the phaser.&quot;</span><span style="color: #333333">);</span>
+            phaser<span style="color: #333333">.</span><span style="color: #0000CC">forceTermination</span><span style="color: #333333">();</span>
+        <span style="color: #333333">}</span> <span style="color: #008800; font-weight: bold">finally</span> <span style="color: #333333">{</span>
+            <span style="color: #888888">// remember to shutdown the executor</span>
+            executorService<span style="color: #333333">.</span><span style="color: #0000CC">shutdown</span><span style="color: #333333">();</span>
+            executorService<span style="color: #333333">.</span><span style="color: #0000CC">awaitTermination</span><span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">,</span> TimeUnit<span style="color: #333333">.</span><span style="color: #0000CC">HOURS</span><span style="color: #333333">);</span>
+        <span style="color: #333333">}</span>
+
+        System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;Is phaser terminated &quot;</span> <span style="color: #333333">+</span> phaser<span style="color: #333333">.</span><span style="color: #0000CC">isTerminated</span><span style="color: #333333">());</span>
+    <span style="color: #333333">}</span>
+<span style="color: #333333">}</span>
+</pre></td></tr></table></div>
