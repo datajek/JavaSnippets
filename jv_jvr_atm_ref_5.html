@@ -1,0 +1,26 @@
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></td><td><pre style="margin: 0; line-height: 125%">   <span style="color: #888888">// Marking Thread reference as volatile</span>
+    <span style="color: #008800; font-weight: bold">volatile</span> Thread thread<span style="color: #333333">;</span>
+    <span style="color: #333399; font-weight: bold">int</span> myInt<span style="color: #333333">;</span>
+
+    <span style="color: #888888">// Assignments are atomic, however, the method isn&#39;t thread-safe. Now more</span>
+    <span style="color: #888888">// than two threads can enter the if-clause even though the thread variable</span>
+    <span style="color: #888888">// is marked volatile. Remember volatile doesn&#39;t mean thread-safety!</span>
+    <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">myFunction</span><span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">int</span> passedInt<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+        myInt <span style="color: #333333">=</span> passedInt<span style="color: #333333">;</span>
+        <span style="color: #008800; font-weight: bold">if</span> <span style="color: #333333">(</span>thread <span style="color: #333333">==</span> <span style="color: #008800; font-weight: bold">null</span><span style="color: #333333">)</span> <span style="color: #333333">{</span>
+            thread <span style="color: #333333">=</span> Thread<span style="color: #333333">.</span><span style="color: #0000CC">currentThread</span><span style="color: #333333">();</span>
+        <span style="color: #333333">}</span>
+    <span style="color: #333333">}</span>
+</pre></td></tr></table></div>
