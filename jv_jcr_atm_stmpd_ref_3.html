@@ -1,0 +1,246 @@
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%">  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">java.util.concurrent.ConcurrentLinkedQueue</span><span style="color: #333333">;</span>
+<span style="color: #008800; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">java.util.concurrent.atomic.AtomicStampedReference</span><span style="color: #333333">;</span>
+
+<span style="color: #008800; font-weight: bold">class</span> <span style="color: #BB0066; font-weight: bold">Demonstration</span> <span style="color: #333333">{</span>
+    
+    <span style="color: #008800; font-weight: bold">private</span> <span style="color: #008800; font-weight: bold">static</span> ConcurrentLinkedQueue<span style="color: #333333">&lt;</span>Node<span style="color: #333333">&gt;</span> availableNodes <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> ConcurrentLinkedQueue<span style="color: #333333">&lt;&gt;();</span>
+    <span style="color: #008800; font-weight: bold">private</span> <span style="color: #008800; font-weight: bold">static</span> AtomicStampedReference<span style="color: #333333">&lt;</span>Node<span style="color: #333333">&gt;</span> head <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> AtomicStampedReference<span style="color: #333333">&lt;&gt;(</span><span style="color: #008800; font-weight: bold">null</span><span style="color: #333333">,</span> <span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">);</span>
+
+    <span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">main</span><span style="color: #333333">(</span> String args<span style="color: #333333">[]</span> <span style="color: #333333">)</span> <span style="color: #008800; font-weight: bold">throws</span> Exception <span style="color: #333333">{</span>
+
+        Node currHead <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">null</span><span style="color: #333333">;</span>
+        Node node <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">null</span><span style="color: #333333">;</span>
+
+        <span style="color: #888888">// nodes are inserted by the main thread with values</span>
+        <span style="color: #888888">// ranging from 0 to 9</span>
+        <span style="color: #008800; font-weight: bold">for</span> <span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">int</span> i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span> i <span style="color: #333333">&lt;</span> <span style="color: #0000DD; font-weight: bold">10</span><span style="color: #333333">;</span> i<span style="color: #333333">++)</span> <span style="color: #333333">{</span>
+            node <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> Node<span style="color: #333333">(</span>i<span style="color: #333333">);</span>
+            node<span style="color: #333333">.</span><span style="color: #0000CC">next</span> <span style="color: #333333">=</span> currHead<span style="color: #333333">;</span>
+            <span style="color: #333399; font-weight: bold">int</span> currStamp <span style="color: #333333">=</span> head<span style="color: #333333">.</span><span style="color: #0000CC">getStamp</span><span style="color: #333333">();</span>
+            head<span style="color: #333333">.</span><span style="color: #0000CC">compareAndSet</span><span style="color: #333333">(</span>currHead<span style="color: #333333">,</span> node<span style="color: #333333">,</span> currStamp<span style="color: #333333">,</span> currStamp <span style="color: #333333">+</span> <span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">);</span>
+            currHead <span style="color: #333333">=</span> node<span style="color: #333333">;</span>
+        <span style="color: #333333">}</span>
+
+        System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;Initial list : &quot;</span><span style="color: #333333">);</span>
+        printNodes<span style="color: #333333">();</span>
+
+        <span style="color: #888888">// creating Thread1</span>
+        Thread thread1 <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> Thread<span style="color: #333333">(</span><span style="color: #008800; font-weight: bold">new</span> Runnable<span style="color: #333333">()</span> <span style="color: #333333">{</span>
+            <span style="color: #555555; font-weight: bold">@Override</span>
+            <span style="color: #008800; font-weight: bold">public</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">run</span><span style="color: #333333">()</span> <span style="color: #333333">{</span>
+
+                <span style="color: #888888">// Thread1 reads-in the current head and its next node</span>
+                Node currentHead <span style="color: #333333">=</span> head<span style="color: #333333">.</span><span style="color: #0000CC">getReference</span><span style="color: #333333">();</span>
+                <span style="color: #333399; font-weight: bold">int</span> currHeadStamp <span style="color: #333333">=</span> head<span style="color: #333333">.</span><span style="color: #0000CC">getStamp</span><span style="color: #333333">();</span>
+                Node nextHead <span style="color: #333333">=</span> currentHead<span style="color: #333333">.</span><span style="color: #0000CC">next</span><span style="color: #333333">;</span>
+
+                System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;Thread 1 sees head (with stamp &quot;</span> <span style="color: #333333">+</span> currHeadStamp <span style="color: #333333">+</span> <span style="background-color: #fff0f0">&quot;) = &quot;</span> <span style="color: #333333">+</span> currentHead<span style="color: #333333">.</span><span style="color: #0000CC">val</span> <span style="color: #333333">+</span> <span style="background-color: #fff0f0">&quot; and head.next = &quot;</span> <span style="color: #333333">+</span> nextHead<span style="color: #333333">.</span><span style="color: #0000CC">val</span><span style="color: #333333">);</span>
+
+                <span style="color: #888888">// sleep Thread1</span>
+                <span style="color: #008800; font-weight: bold">try</span> <span style="color: #333333">{</span>
+                    Thread<span style="color: #333333">.</span><span style="color: #0000CC">sleep</span><span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">5000</span><span style="color: #333333">);</span>
+                <span style="color: #333333">}</span> <span style="color: #008800; font-weight: bold">catch</span> <span style="color: #333333">(</span>InterruptedException ie<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+                    <span style="color: #888888">// ignore</span>
+                <span style="color: #333333">}</span>
+
+                System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;Thread1 about to compare and set&quot;</span><span style="color: #333333">);</span>
+
+                <span style="color: #008800; font-weight: bold">if</span> <span style="color: #333333">(</span>head<span style="color: #333333">.</span><span style="color: #0000CC">compareAndSet</span><span style="color: #333333">(</span>currentHead<span style="color: #333333">,</span> nextHead<span style="color: #333333">,</span> currHeadStamp<span style="color: #333333">,</span> currHeadStamp <span style="color: #333333">+</span> <span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">))</span> <span style="color: #333333">{</span>
+                    System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;Thread1 successfully updated head. List looks as follows: &quot;</span><span style="color: #333333">);</span>
+                    printNodes<span style="color: #333333">();</span>
+                <span style="color: #333333">}</span> <span style="color: #008800; font-weight: bold">else</span> <span style="color: #333333">{</span>
+                    System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;CAS failed in Thread1&quot;</span><span style="color: #333333">);</span>
+                <span style="color: #333333">}</span>
+            <span style="color: #333333">}</span>
+        <span style="color: #333333">});</span>
+
+        thread1<span style="color: #333333">.</span><span style="color: #0000CC">start</span><span style="color: #333333">();</span>
+
+        <span style="color: #888888">// set-up Thread2</span>
+        Thread thread2 <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> Thread<span style="color: #333333">(</span><span style="color: #008800; font-weight: bold">new</span> Runnable<span style="color: #333333">()</span> <span style="color: #333333">{</span>
+            <span style="color: #555555; font-weight: bold">@Override</span>
+            <span style="color: #008800; font-weight: bold">public</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">run</span><span style="color: #333333">()</span> <span style="color: #333333">{</span>
+
+                <span style="color: #888888">// wait for Thread 1 to reach its sleep statement</span>
+                <span style="color: #008800; font-weight: bold">try</span> <span style="color: #333333">{</span>
+                    Thread<span style="color: #333333">.</span><span style="color: #0000CC">sleep</span><span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">1000</span><span style="color: #333333">);</span>
+                <span style="color: #333333">}</span> <span style="color: #008800; font-weight: bold">catch</span> <span style="color: #333333">(</span>InterruptedException ie<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+                    <span style="color: #888888">// ignore</span>
+                <span style="color: #333333">}</span>
+
+                <span style="color: #888888">// dequeue first five nodes from the list and place them</span>
+                <span style="color: #888888">// in the free nodes list</span>
+                Node currHead <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">null</span><span style="color: #333333">;</span>
+                <span style="color: #333399; font-weight: bold">int</span> currStamp<span style="color: #333333">;</span>
+                <span style="color: #008800; font-weight: bold">for</span> <span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">int</span> i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span> i <span style="color: #333333">&lt;</span> <span style="color: #0000DD; font-weight: bold">5</span><span style="color: #333333">;</span> i<span style="color: #333333">++)</span> <span style="color: #333333">{</span>
+                    currHead <span style="color: #333333">=</span> head<span style="color: #333333">.</span><span style="color: #0000CC">getReference</span><span style="color: #333333">();</span>
+                    currStamp <span style="color: #333333">=</span> head<span style="color: #333333">.</span><span style="color: #0000CC">getStamp</span><span style="color: #333333">();</span>
+                    head<span style="color: #333333">.</span><span style="color: #0000CC">compareAndSet</span><span style="color: #333333">(</span>currHead<span style="color: #333333">,</span> currHead<span style="color: #333333">.</span><span style="color: #0000CC">next</span><span style="color: #333333">,</span> currStamp<span style="color: #333333">,</span> currStamp <span style="color: #333333">+</span> <span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">);</span>
+                    currHead<span style="color: #333333">.</span><span style="color: #0000CC">val</span> <span style="color: #333333">=</span> <span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">;</span> <span style="color: #888888">// set to -1 to denote the node is in recycle list</span>
+                    currHead<span style="color: #333333">.</span><span style="color: #0000CC">next</span> <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">null</span><span style="color: #333333">;</span>
+                    availableNodes<span style="color: #333333">.</span><span style="color: #0000CC">add</span><span style="color: #333333">(</span>currHead<span style="color: #333333">);</span>
+                <span style="color: #333333">}</span>
+
+                currHead <span style="color: #333333">=</span> head<span style="color: #333333">.</span><span style="color: #0000CC">getReference</span><span style="color: #333333">();</span>
+                currStamp <span style="color: #333333">=</span> head<span style="color: #333333">.</span><span style="color: #0000CC">getStamp</span><span style="color: #333333">();</span>
+                Node newHead <span style="color: #333333">=</span> availableNodes<span style="color: #333333">.</span><span style="color: #0000CC">remove</span><span style="color: #333333">();</span>
+                newHead<span style="color: #333333">.</span><span style="color: #0000CC">val</span> <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">99</span><span style="color: #333333">;</span> <span style="color: #888888">// set a new value</span>
+                newHead<span style="color: #333333">.</span><span style="color: #0000CC">next</span> <span style="color: #333333">=</span> currHead<span style="color: #333333">;</span>
+                <span style="color: #008800; font-weight: bold">if</span> <span style="color: #333333">(</span>head<span style="color: #333333">.</span><span style="color: #0000CC">compareAndSet</span><span style="color: #333333">(</span>currHead<span style="color: #333333">,</span> newHead<span style="color: #333333">,</span> currStamp<span style="color: #333333">,</span> currStamp <span style="color: #333333">+</span> <span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">))</span> <span style="color: #333333">{</span>
+                    System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;Thread 2 successfully updates. List is as follows : &quot;</span><span style="color: #333333">);</span>
+                    printNodes<span style="color: #333333">();</span>
+                <span style="color: #333333">}</span>
+            <span style="color: #333333">}</span>
+        <span style="color: #333333">});</span>
+
+        thread2<span style="color: #333333">.</span><span style="color: #0000CC">start</span><span style="color: #333333">();</span>
+
+        <span style="color: #888888">// wait for threads to exit</span>
+        thread1<span style="color: #333333">.</span><span style="color: #0000CC">join</span><span style="color: #333333">();</span>
+        thread2<span style="color: #333333">.</span><span style="color: #0000CC">join</span><span style="color: #333333">();</span>
+
+        System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;List when main program exits is as follows &quot;</span><span style="color: #333333">);</span>
+        printNodes<span style="color: #333333">();</span>
+
+    <span style="color: #333333">}</span>
+
+    <span style="color: #888888">// helper method to print the list</span>
+    <span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">printNodes</span><span style="color: #333333">()</span> <span style="color: #333333">{</span>
+        Node currHead <span style="color: #333333">=</span> head<span style="color: #333333">.</span><span style="color: #0000CC">getReference</span><span style="color: #333333">();</span>
+        <span style="color: #333399; font-weight: bold">int</span> currStamp <span style="color: #333333">=</span> head<span style="color: #333333">.</span><span style="color: #0000CC">getStamp</span><span style="color: #333333">();</span>
+        <span style="color: #333399; font-weight: bold">boolean</span> start <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">true</span><span style="color: #333333">;</span>
+        <span style="color: #008800; font-weight: bold">while</span> <span style="color: #333333">(</span>currHead <span style="color: #333333">!=</span> <span style="color: #008800; font-weight: bold">null</span><span style="color: #333333">)</span> <span style="color: #333333">{</span>
+            <span style="color: #008800; font-weight: bold">if</span> <span style="color: #333333">(</span>start<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+                start <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">false</span><span style="color: #333333">;</span>
+                System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">print</span><span style="color: #333333">(</span>currHead<span style="color: #333333">.</span><span style="color: #0000CC">val</span> <span style="color: #333333">+</span> <span style="background-color: #fff0f0">&quot; (head with stamp &quot;</span> <span style="color: #333333">+</span> currStamp <span style="color: #333333">+</span> <span style="background-color: #fff0f0">&quot;) -&gt; &quot;</span><span style="color: #333333">);</span>
+            <span style="color: #333333">}</span> <span style="color: #008800; font-weight: bold">else</span> <span style="color: #333333">{</span>
+                System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">print</span><span style="color: #333333">(</span>currHead<span style="color: #333333">.</span><span style="color: #0000CC">val</span> <span style="color: #333333">+</span> <span style="background-color: #fff0f0">&quot; -&gt; &quot;</span><span style="color: #333333">);</span>
+            <span style="color: #333333">}</span>
+            currHead <span style="color: #333333">=</span> currHead<span style="color: #333333">.</span><span style="color: #0000CC">next</span><span style="color: #333333">;</span>
+        <span style="color: #333333">}</span>
+        System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">();</span>
+    <span style="color: #333333">}</span>    
+<span style="color: #333333">}</span>
+</pre></td></tr></table></div>
