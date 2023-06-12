@@ -1,0 +1,20 @@
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #888888">// function that will be supplied to an instance of DoubleAccumulator</span>
+DoubleBinaryOperator doubleBinaryOperator <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> DoubleBinaryOperator<span style="color: #333333">()</span> <span style="color: #333333">{</span>
+   <span style="color: #555555; font-weight: bold">@Override</span>
+   <span style="color: #008800; font-weight: bold">public</span> <span style="color: #333399; font-weight: bold">double</span> <span style="color: #0066BB; font-weight: bold">applyAsDouble</span><span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">double</span> left<span style="color: #333333">,</span> <span style="color: #333399; font-weight: bold">double</span> right<span style="color: #333333">)</span> <span style="color: #333333">{</span>
+       <span style="color: #008800; font-weight: bold">return</span> left <span style="color: #333333">+</span> right<span style="color: #333333">;</span>
+   <span style="color: #333333">}</span>
+<span style="color: #333333">};</span>
+
+<span style="color: #888888">// instantiating an instance of DoubleAccumulator with an initial value of zero</span>
+DoubleAccumulator longAccumulator <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> DoubleAccumulator<span style="color: #333333">(</span>doubleBinaryOperator<span style="color: #333333">,</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">);</span>
+</pre></td></tr></table></div>
