@@ -1,0 +1,24 @@
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #888888">// acquire the associated lock</span>
+        lock<span style="color: #333333">.</span><span style="color: #0000CC">lock</span><span style="color: #333333">();</span>
+        <span style="color: #008800; font-weight: bold">try</span> <span style="color: #333333">{</span>
+            <span style="color: #008800; font-weight: bold">while</span> <span style="color: #333333">(</span><span style="color: #888888">/* some condition */</span><span style="color: #333333">)</span> <span style="color: #333333">{</span>
+                <span style="color: #888888">// always invoke await or wait in a loop to cater for spurious wake-ups</span>
+               <span style="color: #888888">// and after synchronizing on the associated lock                     </span>
+                condition<span style="color: #333333">.</span><span style="color: #0000CC">await</span><span style="color: #333333">();</span>
+            <span style="color: #333333">}</span>
+        <span style="color: #333333">}</span> <span style="color: #008800; font-weight: bold">finally</span> <span style="color: #333333">{</span>
+            <span style="color: #888888">// remember to unlock in a finally block</span>
+            lock<span style="color: #333333">.</span><span style="color: #0000CC">unlock</span><span style="color: #333333">();</span>
+        <span style="color: #333333">}</span>
+</pre></td></tr></table></div>
